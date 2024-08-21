@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { Container, TextField, Button, Typography, Link } from '@mui/material';
+import '../styles/signin.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -32,11 +33,11 @@ const SignIn = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Typography variant="h5" gutterBottom>
+    <Container className="container">
+      <Typography variant="h2" gutterBottom>
         {isSignUp ? 'Sign Up' : 'Sign In'}
       </Typography>
-      {error && <Typography color="error">{error}</Typography>}
+      {error && <Typography className="error-message">{error}</Typography>}
       <form onSubmit={handleAuth}>
         <TextField
           label="Email"
@@ -46,6 +47,8 @@ const SignIn = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="text-field"
+          variant="outlined"
         />
         <TextField
           label="Password"
@@ -55,12 +58,14 @@ const SignIn = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="text-field"
+          variant="outlined"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button type="submit" variant="contained" fullWidth className="button">
           {isSignUp ? 'Sign Up' : 'Sign In'}
         </Button>
       </form>
-      <Button onClick={toggleAuthMode} fullWidth>
+      <Button onClick={toggleAuthMode} fullWidth className="toggle-button">
         {isSignUp ? 'Already have an account? Sign In' : 'Don’t have an account? Sign Up'}
       </Button>
     </Container>

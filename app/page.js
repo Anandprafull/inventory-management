@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { Container, Typography, Button } from '@mui/material';
-import AddItemForm from '../components/AddItemForm';
-import ItemCard from '../components/ItemCard';
+import AddItemForm from '../_components/AddItemForm';
+import ItemCard from '../_components/ItemCard';
 import  { useRouter }  from 'next/navigation';
 
 const Home = () => {

@@ -1,28 +1,36 @@
-// components/EditItemForm.js
 import React, { useState, useEffect } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
-const EditItemForm = ({ itemId, open, onClose }) => {
-  const [itemName, setItemName] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [expirationDate, setExpirationDate] = useState('');
+const useStyles = makeStyles((theme) => ({
+  dialog: {
+    padding: theme.spacing(2),
+  },
+  textField: {
+    marginBottom: theme.spacing(2),
+  },
+  actions: {
+    justifyContent: 'space-between',
+    padding: theme.spacing(1, 2),
+  },
+  saveButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+  cancelButton: {
+    color: theme.palette.error.main,
+  },
+}));
+
+const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, setQuantity, expirationDate, setExpirationDate }) => {
+  const classes = useStyles();
 
   useEffect(() => {
-    const fetchItem = async () => {
-      const docRef = doc(db, 'pantryItems', itemId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const itemData = docSnap.data();
-        setItemName(itemData.itemName);
-        setQuantity(itemData.quantity);
-        setExpirationDate(itemData.expirationDate);
-      }
-    };
-    if (itemId) {
-      fetchItem();
-    }
   }, [itemId]);
 
   const handleSave = async () => {
@@ -36,7 +44,7 @@ const EditItemForm = ({ itemId, open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth>
+    <Dialog open={open} onClose={onClose} fullWidth classes={{ paper: classes.dialog }}>
       <DialogTitle>Edit Item</DialogTitle>
       <DialogContent>
         <TextField
@@ -46,6 +54,7 @@ const EditItemForm = ({ itemId, open, onClose }) => {
           required
           fullWidth
           margin="normal"
+          className={classes.textField}
         />
         <TextField
           label="Quantity"
@@ -55,6 +64,7 @@ const EditItemForm = ({ itemId, open, onClose }) => {
           required
           fullWidth
           margin="normal"
+          className={classes.textField}
         />
         <TextField
           label="Expiration Date"
@@ -64,16 +74,17 @@ const EditItemForm = ({ itemId, open, onClose }) => {
           required
           fullWidth
           margin="normal"
+          className={classes.textField}
           InputLabelProps={{
             shrink: true,
           }}
         />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="secondary">
+      <DialogActions className={classes.actions}>
+        <Button onClick={onClose} className={classes.cancelButton}>
           Cancel
         </Button>
-        <Button onClick={handleSave} variant="contained" color="primary">
+        <Button onClick={handleSave} className={classes.saveButton}>
           Save
         </Button>
       </DialogActions>
