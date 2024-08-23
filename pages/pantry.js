@@ -9,6 +9,19 @@ import EditItemForm from '../_components/EditItemForm';
 import { Container, Typography, Grid, Button, IconButton } from '@mui/material';
 import { DarkMode, LightMode } from '@mui/icons-material';
 import { useTheme } from '../context/ThemeContext';
+import { styled } from '@mui/system';
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  marginTop: theme.spacing(4),
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
 
 const Pantry = () => {
   const [items, setItems] = useState([]);
@@ -51,14 +64,16 @@ const Pantry = () => {
   };
 
   return (
-    <Container>
+    <StyledContainer>
       <Typography variant="h4" gutterBottom>
+        Pantry Management
       </Typography>
-      <Button onClick={handleSignOut} variant="contained" color="secondary" style={{ marginBottom: '20px' }}>
-      </Button>
-      <IconButton onClick={toggleDarkMode} style={{ marginBottom: '20px' }}>
+      <StyledButton onClick={handleSignOut} variant="contained" color="secondary">
+        Sign Out
+      </StyledButton>
+      <StyledIconButton onClick={toggleDarkMode}>
         {isDarkMode ? <LightMode /> : <DarkMode />}
-      </IconButton>
+      </StyledIconButton>
       <AddItemForm userId={auth.currentUser?.uid} />
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
         {items.map(item => (
@@ -80,7 +95,7 @@ const Pantry = () => {
           onClose={handleEditClose} 
         />
       )}
-    </Container>
+    </StyledContainer>
   );
 };
 

@@ -1,35 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/system';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const useStyles = makeStyles((theme) => ({
-  dialog: {
+const DialogWrapper = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialog-paper': {
     padding: theme.spacing(2),
-  },
-  textField: {
-    marginBottom: theme.spacing(2),
-  },
-  actions: {
-    justifyContent: 'space-between',
-    padding: theme.spacing(1, 2),
-  },
-  saveButton: {
-    backgroundColor: theme.palette.primary.main,
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: theme.palette.primary.dark,
-    },
-  },
-  cancelButton: {
-    color: theme.palette.error.main,
   },
 }));
 
-const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, setQuantity, expirationDate, setExpirationDate }) => {
-  const classes = useStyles();
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
 
+const ActionsWrapper = styled(DialogActions)(({ theme }) => ({
+  justifyContent: 'space-between',
+  padding: theme.spacing(1, 2),
+}));
+
+const SaveButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.dark,
+  },
+}));
+
+const CancelButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.error.main,
+}));
+
+const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, setQuantity, expirationDate, setExpirationDate }) => {
   useEffect(() => {
   }, [itemId]);
 
@@ -44,19 +46,18 @@ const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, 
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth classes={{ paper: classes.dialog }}>
+    <DialogWrapper open={open} onClose={onClose} fullWidth>
       <DialogTitle>Edit Item</DialogTitle>
       <DialogContent>
-        <TextField
+        <StyledTextField
           label="Item Name"
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
           required
           fullWidth
           margin="normal"
-          className={classes.textField}
         />
-        <TextField
+        <StyledTextField
           label="Quantity"
           type="number"
           value={quantity}
@@ -64,9 +65,8 @@ const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, 
           required
           fullWidth
           margin="normal"
-          className={classes.textField}
         />
-        <TextField
+        <StyledTextField
           label="Expiration Date"
           type="date"
           value={expirationDate}
@@ -74,21 +74,20 @@ const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, 
           required
           fullWidth
           margin="normal"
-          className={classes.textField}
           InputLabelProps={{
             shrink: true,
           }}
         />
       </DialogContent>
-      <DialogActions className={classes.actions}>
-        <Button onClick={onClose} className={classes.cancelButton}>
+      <ActionsWrapper>
+        <CancelButton onClick={onClose}>
           Cancel
-        </Button>
-        <Button onClick={handleSave} className={classes.saveButton}>
+        </CancelButton>
+        <SaveButton onClick={handleSave}>
           Save
-        </Button>
-      </DialogActions>
-    </Dialog>
+        </SaveButton>
+      </ActionsWrapper>
+    </DialogWrapper>
   );
 };
 

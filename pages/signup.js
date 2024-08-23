@@ -1,9 +1,31 @@
-
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Container, TextField, Button, Typography } from '@mui/material';
-import  { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { styled } from '@mui/system';
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+}));
+
+const StyledForm = styled('form')(({ theme }) => ({
+  width: '100%',
+  maxWidth: '400px',
+  marginTop: theme.spacing(3),
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -21,34 +43,32 @@ const SignUp = () => {
   };
 
   return (
-    <Container>
+    <StyledContainer>
       <Typography variant="h4" gutterBottom>
         Sign Up
       </Typography>
-      <form onSubmit={handleSignUp}>
-        <TextField
+      <StyledForm onSubmit={handleSignUp}>
+        <StyledTextField
           label="Email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           fullWidth
-          margin="normal"
         />
-        <TextField
+        <StyledTextField
           label="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           fullWidth
-          margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <StyledButton type="submit" variant="contained" color="primary" fullWidth>
           Sign Up
-        </Button>
-      </form>
-    </Container>
+        </StyledButton>
+      </StyledForm>
+    </StyledContainer>
   );
 };
 

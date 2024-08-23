@@ -3,8 +3,39 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { Container, TextField, Button, Typography, Link } from '@mui/material';
-import '../styles/signin.css';
+import { Container, TextField, Button, Typography } from '@mui/material';
+import { styled } from '@mui/system';
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+}));
+
+const StyledForm = styled('form')(({ theme }) => ({
+  width: '100%',
+  maxWidth: '400px',
+  marginTop: theme.spacing(3),
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+}));
+
+const ToggleButton = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+}));
+
+const ErrorMessage = styled(Typography)(({ theme }) => ({
+  color: theme.palette.error.main,
+  marginBottom: theme.spacing(2),
+}));
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -33,42 +64,38 @@ const SignIn = () => {
   };
 
   return (
-    <Container className="container">
+    <StyledContainer>
       <Typography variant="h2" gutterBottom>
         {isSignUp ? 'Sign Up' : 'Sign In'}
       </Typography>
-      {error && <Typography className="error-message">{error}</Typography>}
-      <form onSubmit={handleAuth}>
-        <TextField
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <StyledForm onSubmit={handleAuth}>
+        <StyledTextField
           label="Email"
           type="email"
           fullWidth
-          margin="normal"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="text-field"
           variant="outlined"
         />
-        <TextField
+        <StyledTextField
           label="Password"
           type="password"
           fullWidth
-          margin="normal"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="text-field"
           variant="outlined"
         />
-        <Button type="submit" variant="contained" fullWidth className="button">
+        <StyledButton type="submit" variant="contained" fullWidth>
           {isSignUp ? 'Sign Up' : 'Sign In'}
-        </Button>
-      </form>
-      <Button onClick={toggleAuthMode} fullWidth className="toggle-button">
+        </StyledButton>
+      </StyledForm>
+      <ToggleButton onClick={toggleAuthMode} fullWidth>
         {isSignUp ? 'Already have an account? Sign In' : 'Don’t have an account? Sign Up'}
-      </Button>
-    </Container>
+      </ToggleButton>
+    </StyledContainer>
   );
 };
 
