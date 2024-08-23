@@ -1,3 +1,8 @@
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* styles/globals.css */
 :root {
   --background-color: white;

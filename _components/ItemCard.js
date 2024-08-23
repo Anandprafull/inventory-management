@@ -1,24 +1,6 @@
-// components/ItemCard.js
 import React from 'react';
 import { db } from '../firebase';
 import { doc, deleteDoc } from 'firebase/firestore';
-import { Card, CardContent, Typography, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { styled } from '@mui/system';
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-}));
-
-const StyledCardContent = styled(CardContent)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-}));
-
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  marginLeft: theme.spacing(1),
-}));
 
 const ItemCard = ({ id, itemName, quantity, expirationDate, onEdit }) => {
   const handleDelete = async () => {
@@ -31,21 +13,19 @@ const ItemCard = ({ id, itemName, quantity, expirationDate, onEdit }) => {
   };
 
   return (
-    <StyledCard>
-      <StyledCardContent>
-        <Typography variant="h6">{itemName}</Typography>
-        <Typography variant="body2">Quantity: {quantity}</Typography>
-        <Typography variant="body2">Expiration Date: {expirationDate}</Typography>
-        <div>
-          <StyledIconButton onClick={onEdit}>
-            {/* Add an edit icon here if needed */}
-          </StyledIconButton>
-          <StyledIconButton onClick={handleDelete}>
-            <DeleteIcon />
-          </StyledIconButton>
-        </div>
-      </StyledCardContent>
-    </StyledCard>
+    <div className="mb-4 p-4 border rounded shadow">
+      <h6 className="text-lg">{itemName}</h6>
+      <p className="text-sm">Quantity: {quantity}</p>
+      <p className="text-sm">Expiration Date: {expirationDate}</p>
+      <div className="flex">
+        <button onClick={onEdit} className="ml-2 p-2 bg-gray-200 rounded">
+          {/* Add an edit icon here if needed */}
+        </button>
+        <button onClick={handleDelete} className="ml-2 p-2 bg-red-500 text-white rounded">
+          Delete
+        </button>
+      </div>
+    </div>
   );
 };
 
