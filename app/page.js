@@ -1,11 +1,10 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { Container, Typography, Button, Box } from '@mui/material';
 import AddItemForm from '../_components/AddItemForm';
 import ItemCard from '../_components/ItemCard';
-import  { useRouter }  from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -23,20 +22,20 @@ const Home = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [router]);
 
   return (
-    <Container>
-      <Box display="flex" justifyContent="center" alignItems="center" p={4}>
-      <Typography variant="h4" gutterBottom>
-        Pantry Management
-      </Typography>
-      </Box>
-      <AddItemForm userId={auth.currentUser?.uid} />
-      {items.map(item => (
-        <ItemCard key={item.id} {...item} />
-      ))}
-    </Container>
+    <div className="min-h-screen flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-center mt-4">Pantry Management</h1>
+      <div className="container mx-auto p-4">
+        <AddItemForm userId={auth.currentUser?.uid} />
+        <div className="grid grid-cols-1 gap-4">
+          {items.map(item => (
+            <ItemCard key={item.id} {...item} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

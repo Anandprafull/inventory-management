@@ -1,39 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
-import { styled } from '@mui/system';
+import { Dialog } from '@headlessui/react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const DialogWrapper = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialog-paper': {
-    padding: theme.spacing(2),
-  },
-}));
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-}));
-
-const ActionsWrapper = styled(DialogActions)(({ theme }) => ({
-  justifyContent: 'space-between',
-  padding: theme.spacing(1, 2),
-}));
-
-const SaveButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: '#fff',
-  '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
-
-const CancelButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.error.main,
-}));
-
 const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, setQuantity, expirationDate, setExpirationDate }) => {
-  useEffect(() => {
-  }, [itemId]);
+  useEffect(() => {}, [itemId]);
 
   const handleSave = async () => {
     const docRef = doc(db, 'pantryItems', itemId);
@@ -46,48 +17,44 @@ const EditItemForm = ({ open, onClose, itemId, itemName, setItemName, quantity, 
   };
 
   return (
-    <DialogWrapper open={open} onClose={onClose} fullWidth>
-      <DialogTitle>Edit Item</DialogTitle>
-      <DialogContent>
-        <StyledTextField
-          label="Item Name"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <StyledTextField
-          label="Quantity"
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <StyledTextField
-          label="Expiration Date"
-          type="date"
-          value={expirationDate}
-          onChange={(e) => setExpirationDate(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </DialogContent>
-      <ActionsWrapper>
-        <CancelButton onClick={onClose}>
-          Cancel
-        </CancelButton>
-        <SaveButton onClick={handleSave}>
-          Save
-        </SaveButton>
-      </ActionsWrapper>
-    </DialogWrapper>
+    <Dialog open={open} onClose={onClose} className="fixed inset-0 z-10 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
+        <Dialog.Title className="text-xl font-semibold p-4">Edit Item</Dialog.Title>
+        <div className="p-4">
+          <input
+            type="text"
+            className="w-full p-2 mb-4 border rounded"
+            placeholder="Item Name"
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
+            required
+          />
+          <input
+            type="number"
+            className="w-full p-2 mb-4 border rounded"
+            placeholder="Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            required
+          />
+          <input
+            type="date"
+            className="w-full p-2 mb-4 border rounded"
+            value={expirationDate}
+            onChange={(e) => setExpirationDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="flex justify-between p-4 border-t">
+          <button onClick={onClose} className="text-red-600">
+            Cancel
+          </button>
+          <button onClick={handleSave} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Save
+          </button>
+        </div>
+      </div>
+    </Dialog>
   );
 };
 
