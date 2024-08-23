@@ -54,6 +54,8 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    max-height: 40px;
+    align-items: center;
 }
 
 .item-actions .edit-button {
@@ -65,9 +67,3 @@
     background-color: red;
     color: white;
 }
-  
-  .item-actions button:hover {
-    background-color: #0056b3;
-    max-height: 10px;
-    align-items: center;
-  }
