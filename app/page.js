@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Typography, Button, Box } from '@mui/material';
 import AddItemForm from '../_components/AddItemForm';
 import ItemCard from '../_components/ItemCard';
 import  { useRouter }  from 'next/navigation';
@@ -27,9 +27,11 @@ const Home = () => {
 
   return (
     <Container>
+      <Box display="flex" justifyContent="center" alignItems="center" p={4}>
       <Typography variant="h4" gutterBottom>
         Pantry Management
       </Typography>
+      </Box>
       <AddItemForm userId={auth.currentUser?.uid} />
       {items.map(item => (
         <ItemCard key={item.id} {...item} />
