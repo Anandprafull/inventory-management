@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from '../context/ThemeContext';
-import '../app/styles
-.css'; // Ensure Tailwind CSS is imported
+import '../app/styles.css'; // Ensure Tailwind CSS is imported
 
 function MyApp({ Component, pageProps }) {
   return (
