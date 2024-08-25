@@ -5,6 +5,7 @@ import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import AddItemForm from '../_components/AddItemForm';
 import ItemCard from '../_components/ItemCard';
 import { useRouter } from 'next/navigation';
+import './styles.css';
 
 const Home = () => {
   const [items, setItems] = useState([]);
